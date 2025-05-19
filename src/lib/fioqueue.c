@@ -312,7 +312,6 @@ Matrix2d* get_matrix2d_from_text_file(const char* filename, int index)
     }
     FILE* fp = fopen(filename, "r");
     if (fp == NULL) {
-        fclose(fp);
         printf("Ошибка считывания файла %s\n", filename);
         exit(EXIT_FAILURE);
     }
@@ -355,7 +354,6 @@ int get_matrix2d_from_binary_file(
     }
     FILE* fp = fopen(filename, "rb");
     if (fp == NULL) {
-        fclose(fp);
         printf("Ошибка считывания файла %s\n", filename);
         exit(EXIT_FAILURE);
     }
