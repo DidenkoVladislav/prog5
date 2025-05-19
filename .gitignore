@@ -2,3 +2,9 @@
 *.o
 *.a
 bin/demo
+bitrgbled
+data-
+gdb.txt
+head-
+q1.txt
+q2.bin

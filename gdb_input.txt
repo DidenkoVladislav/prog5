@@ -1,0 +1,141 @@
+c
+set logging overwrite on
+set logging enabled on
+b 8
+b 14
+b 19
+b 28
+b 33
+b 40
+b 47
+b 55
+b 59
+b 63
+b 66
+b 68
+b 70
+b 72
+b 74
+b 76
+b 78
+b 80
+b 82
+b 85
+r
+n
+p q1
+n
+p q1
+p q1.size
+p q1->head
+p q1->tail
+c
+p q2
+n
+p q2
+p q2.size
+p q2->head
+p q2->tail
+c
+p mat1
+n
+p mat1
+p mat1.rows
+p mat1.cols
+p mat1.type
+p mat1->arr
+p mat1.settings
+p mat1->bitrgbled
+c
+p q3
+n
+p q3
+p q3.size
+p q3->head
+p q3->tail
+c
+p q4
+n
+p q4
+p q4.size
+p q4->head
+p q4->tail
+c
+p q4->head->data
+n
+p q4->head->data
+c
+p q5
+n
+p q5
+p q5.size
+p q5->head
+p q5->tail
+c
+p trans
+n
+p trans
+p trans.rows
+p trans.cols
+p trans.type
+p trans->arr
+p trans.settings
+p trans->bitrgbled
+c
+p mat3
+n
+p mat3
+p mat3.rows
+p mat3.cols
+p mat3.type
+p mat3->arr
+p mat3.settings
+p mat3->bitrgbled
+c
+p mat3_invers
+n
+p mat3_invers
+p mat3_invers.rows
+p mat3_invers.cols
+p mat3_invers.type
+p mat3_invers->arr
+p mat3_invers.settings
+p mat3_invers->bitrgbled
+c
+p q1
+p q1.size
+c
+p q1.size
+p q2
+p q2.size
+c
+p q2.size
+p mat1
+p mat1.rows
+c
+p mat1.rows
+p trans
+p trans.rows
+c
+p trans.rows
+p mat3
+p mat3.rows
+c
+p mat3.rows
+p mat3_invers
+p mat3_invers.rows
+c
+p mat3_invers.rows
+p q3
+p q3.size
+c
+p q3.size
+p q4
+p q4.size
+c
+p q4.size
+p q5
+p q5.size
+c
+p q5.size
+c

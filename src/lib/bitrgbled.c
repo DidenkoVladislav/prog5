@@ -114,7 +114,6 @@ void show_bitrgbled_bits(ulg s)
 static void mem_check(void* p)
 {
     if (p == NULL) {
-        free(p);
         puts("Ошибка выделения памяти.\n");
         exit(EXIT_FAILURE);
     }

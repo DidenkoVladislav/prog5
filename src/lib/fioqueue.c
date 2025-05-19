@@ -109,6 +109,10 @@ static Matrix2d* load_matrix2d_from_text(FILE* fp)
     m->cols = cols;
     m->type = type;
     m->arr = create_arr(rows, cols);
+    if (m->arr == NULL) {
+        destroy_matrix2d(m, true);
+        return NULL;
+    }
 
     for (size_t i = 0, j; i < m->rows; i++) {
         for (j = 0; j < m->cols; j++) {
@@ -137,6 +141,8 @@ static Matrix2d* load_matrix2d_from_text(FILE* fp)
         return NULL;
     }
     bitrgbled_struct_from_bitrgbled(&m->settings, m->bitrgbled);
+
+    show_matrix2d(m);
 
     return m;
 }
@@ -260,6 +266,8 @@ tdQueue* load_queue_from_file(const char* filename, int mode)
     }
 
     tdQueue* q = queue_create();
+    if (q == NULL)
+        return q;
 
     int size;
     if (mode == TEXT_MODE) {
@@ -282,7 +290,7 @@ tdQueue* load_queue_from_file(const char* filename, int mode)
         Matrix2d* m = (mode == TEXT_MODE) ? (load_matrix2d_from_text(fp))
                                           : (load_matrix2d_from_binary(fp));
         if (m == NULL) {
-            queue_free(q);
+            queue_free_with_matrix2d(q);
             fclose(fp);
             printf("Ошибка считывания файла %s\n", filename);
             exit(EXIT_FAILURE);

@@ -54,6 +54,21 @@ void queue_print(tdQueue* q)
     }
 }
 
+// Вывод matrix2d в очереди
+void queue_print_matrix2d(tdQueue* q)
+{
+    int i = 0;
+
+    QueueIterator* it = queue_iterator_create(q, 0);
+    if (it == NULL)
+        return;
+    while (it->current != NULL) {
+        printf("%d\n", i++);
+        show_matrix2d(queue_iterator_next(it));
+    }
+    free(it);
+}
+
 // Удаление элемента из начала очереди
 void* queue_dequeue(tdQueue* q)
 {
@@ -149,6 +164,19 @@ void queue_free(tdQueue* q)
     free(q);
 }
 
+// Освобождение памяти, включая matrix2d
+void queue_free_with_matrix2d(tdQueue* q)
+{
+    tdNode* curr = q->head;
+    while (curr) {
+        tdNode* temp = curr;
+        curr = curr->next;
+        destroy_matrix2d(temp->data, true);
+        free(temp);
+    }
+    free(q);
+}
+
 // Копирование очереди
 tdQueue* queue_copy(tdQueue* orig)
 {
@@ -157,7 +185,9 @@ tdQueue* queue_copy(tdQueue* orig)
     tdNode* curr = orig->head;
     while (curr) {
         void* d = curr->data;
-        queue_enqueue(copy, d);
+        Matrix2d* m_copy = calloc(1, sizeof(Matrix2d));
+        matrix2d_copy_constructor(d, m_copy);
+        queue_enqueue(copy, m_copy);
         curr = curr->next;
     }
 
@@ -172,14 +202,18 @@ tdQueue* queue_merge(tdQueue* q1, tdQueue* q2)
     tdNode* curr = q1->head;
     while (curr) {
         void* d = curr->data;
-        queue_enqueue(merge, d);
+        Matrix2d* m_copy = calloc(1, sizeof(Matrix2d));
+        matrix2d_copy_constructor(d, m_copy);
+        queue_enqueue(merge, m_copy);
         curr = curr->next;
     }
 
     curr = q2->head;
     while (curr) {
         void* d = curr->data;
-        queue_enqueue(merge, d);
+        Matrix2d* m_copy = calloc(1, sizeof(Matrix2d));
+        matrix2d_copy_constructor(d, m_copy);
+        queue_enqueue(merge, m_copy);
         curr = curr->next;
     }
 

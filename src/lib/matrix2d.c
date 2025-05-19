@@ -3,7 +3,6 @@
 static void mem_check(void* p)
 {
     if (p == NULL) {
-        free(p);
         puts("Ошибка выделения памяти.\n");
         exit(EXIT_FAILURE);
     }
@@ -16,8 +15,8 @@ void fill_matrix2d_array(Matrix2d* m)
     printf("Введите %ld элемента: ", m->cols * m->rows);
     switch (m->type) {
     case union_var_i:
-        for (size_t i = 0, j; i < m->cols; ++i) {
-            for (j = 0; j < m->rows; ++j) {
+        for (size_t i = 0, j; i < m->rows; ++i) {
+            for (j = 0; j < m->cols; ++j) {
                 if (scanf("%d", &m->arr[i][j].var_i) != 1) {
                     puts("Некорректный ввод.");
                     exit(EXIT_FAILURE);
@@ -153,14 +152,9 @@ void matrix2d_copy_constructor(Matrix2d* m, Matrix2d* n)
     }
 
     n->settings = m->settings;
-
-    n->bitrgbled->red = m->bitrgbled->red;
-    n->bitrgbled->green = m->bitrgbled->green;
-    n->bitrgbled->blue = m->bitrgbled->blue;
-    n->bitrgbled->brightness = m->bitrgbled->brightness;
-    n->bitrgbled->colortemp = m->bitrgbled->colortemp;
-    n->bitrgbled->controltype = m->bitrgbled->controltype;
-    n->bitrgbled->mode = m->bitrgbled->mode;
+    if (n->bitrgbled == NULL)
+        n->bitrgbled = calloc(1, sizeof(BITrgbled));
+    bitrgbled_struct_from_bitrgbled(&n->settings, n->bitrgbled);
 }
 
 // Создание массива
@@ -200,8 +194,12 @@ void destroy_matrix2d(Matrix2d* m, bool is_quiet)
         printf("%p - освобождается.\n", m->bitrgbled);
         printf("%p - освобождается.\n", m);
     }
-    destroy_arr(m);
-    destroy_struct_bitrgbled(m->bitrgbled);
+    if (m->arr != NULL)
+        destroy_arr(m);
+    if (m->bitrgbled != NULL) {
+        destroy_struct_bitrgbled(m->bitrgbled);
+        m->bitrgbled = NULL;
+    }
     free(m);
     m = NULL;
 }
@@ -492,21 +490,24 @@ Matrix2d* matrix_transpose(Matrix2d* m)
     mem_check(tran);
     tran->cols = m->rows;
     tran->rows = m->cols;
-    tran->arr = create_arr(tran->cols, tran->rows);
+    tran->arr = create_arr(tran->rows, tran->cols);
 
     tran->type = m->type;
+    tran->settings = m->settings;
+    tran->bitrgbled = calloc(1, sizeof(BITrgbled));
+    bitrgbled_struct_from_bitrgbled(&tran->settings, tran->bitrgbled);
     switch (m->type) {
     case union_var_i:
-        for (size_t i = 0, j; i < tran->cols; ++i) {
-            for (j = 0; j < tran->rows; ++j) {
+        for (size_t i = 0, j; i < tran->rows; ++i) {
+            for (j = 0; j < tran->cols; ++j) {
                 tran->arr[i][j].var_i = m->arr[j][i].var_i;
             }
         }
         break;
 
     case union_var_d:
-        for (size_t i = 0, j; i < tran->cols; ++i) {
-            for (j = 0; j < tran->rows; ++j) {
+        for (size_t i = 0, j; i < tran->rows; ++i) {
+            for (j = 0; j < tran->cols; ++j) {
                 tran->arr[i][j].var_d = m->arr[j][i].var_d;
             }
         }

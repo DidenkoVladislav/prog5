@@ -1,6 +1,7 @@
 #ifndef CONTQUEUE_H
 #define CONTQUEUE_H
 
+#include "matrix2d.h"
 #include <math.h>
 #include <stdbool.h>
 #include <stdio.h>
@@ -32,6 +33,7 @@ typedef struct {
 tdQueue* queue_create(void);
 void queue_enqueue(tdQueue* q, void* d);
 void queue_print(tdQueue* q);
+void queue_print_matrix2d(tdQueue* q);
 void* queue_dequeue(tdQueue* q);
 bool queue_is_empty(tdQueue* q);
 int queue_size(tdQueue* q);
@@ -43,6 +45,7 @@ tdQueue* queue_copy(tdQueue* orig);
 tdQueue* queue_merge(tdQueue* q1, tdQueue* q2);
 
 void queue_free(tdQueue* q);
+void queue_free_with_matrix2d(tdQueue* q);
 
 QueueIterator* queue_iterator_create(tdQueue* q, int index);
 void* queue_iterator_next(QueueIterator* it);

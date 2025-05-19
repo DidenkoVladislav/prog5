@@ -1,7 +1,8 @@
 APP_NAME = demo
 LIB_NAME = lib
+DEBUG_FILES = bitrgbled data- gdb.txt head- q1.txt q2.bin
 
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror -g -O0
 CPPFLAGS = -I src -MP -MMD
 VALFLAGS = --tool=memcheck --leak-check=full --show-leak-kinds=all --track-origins=yes
 
@@ -38,7 +39,7 @@ $(OBJ_DIR)/%.o: %.c
 
 .PHONY: clean
 clean:
-	$(RM) $(APP_PATH) $(LIB_PATH)
+	$(RM) $(APP_PATH) $(LIB_PATH) $(DEBUG_FILES)
 	find $(OBJ_DIR) -name '*.o' -exec $(RM) '{}' \;
 	find $(OBJ_DIR) -name '*.d' -exec $(RM) '{}' \;
 
@@ -46,5 +47,10 @@ clean:
 run: $(APP_PATH)
 	$(APP_PATH)
 
-valgrind:
+.PHONY: valgrind
+valgrind: $(APP_PATH)
 	valgrind $(VALFLAGS) $(APP_PATH)
+
+.PHONY: gdb
+gdb: $(APP_PATH)
+	gdb $(APP_PATH) <gdb_input.txt
