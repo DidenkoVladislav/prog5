@@ -67,3 +67,7 @@ opt: $(LIB_PATH)
 	$(CC) $(CFLAGS) -O1 -I src $(OPT_SOURCES) $< -o $(OPT_PATH)_$@_1
 	$(CC) $(CFLAGS) -O2 -I src $(OPT_SOURCES) $< -o $(OPT_PATH)_$@_2
 	$(CC) $(CFLAGS) -O3 -I src $(OPT_SOURCES) $< -o $(OPT_PATH)_$@_3
+
+.PHONY: strace
+strace: $(APP_PATH)
+	strace -c $<

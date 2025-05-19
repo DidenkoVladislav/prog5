@@ -8,3 +8,4 @@ gdb.txt
 head-
 q1.txt
 q2.bin
+loop_opt_*

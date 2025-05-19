@@ -1,0 +1,26 @@
+% time     seconds  usecs/call     calls    errors syscall
+------ ----------- ----------- --------- --------- ----------------
+ 91.79    0.002013          15       127           write
+  3.92    0.000086          14         6           openat
+  2.42    0.000053           8         6           close
+  1.23    0.000027           3         7           fstat
+  0.64    0.000014           4         3           read
+  0.00    0.000000           0         8           mmap
+  0.00    0.000000           0         3           mprotect
+  0.00    0.000000           0         1           munmap
+  0.00    0.000000           0         3           brk
+  0.00    0.000000           0         2           pread64
+  0.00    0.000000           0         1         1 access
+  0.00    0.000000           0         1           execve
+  0.00    0.000000           0         1           arch_prctl
+  0.00    0.000000           0         1           set_tid_address
+  0.00    0.000000           0         1           set_robust_list
+  0.00    0.000000           0         1           prlimit64
+  0.00    0.000000           0         1           getrandom
+  0.00    0.000000           0         1           rseq
+------ ----------- ----------- --------- --------- ----------------
+100.00    0.002193          12       174         1 total
+
+
+strace -e trace=access bin/demo
+access("/etc/ld.so.preload", R_OK)      = -1 ENOENT (No such file or directory)
