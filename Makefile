@@ -71,3 +71,7 @@ opt: $(LIB_PATH)
 .PHONY: strace
 strace: $(APP_PATH)
 	strace -c $<
+
+.PHONY: ltrace
+ltrace: $(APP_PATH)
+	ltrace -c $<
