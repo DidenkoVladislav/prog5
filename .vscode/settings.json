@@ -1,0 +1,7 @@
+{
+    "[c][cpp]": {
+        "editor.formatOnSave": true,
+        "editor.formatOnType": true,
+        "files.insertFinalNewline": true
+    }
+}
